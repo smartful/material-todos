@@ -5,8 +5,17 @@ import { Box, Button, TextField } from "@material-ui/core";
 
 const TodoAdder = () => {
   const [title, setTitle] = useState("");
+  const dispatch = useDispatch();
 
-  const addTodo = () => {};
+  const addTodo = () => {
+    dispatch({
+      type: ADD_TODO,
+      payload: {
+        title,
+      },
+    });
+    setTitle("");
+  };
 
   return (
     <Box>

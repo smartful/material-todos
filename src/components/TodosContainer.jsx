@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Box, Divider, Grid, List, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
+import TodoItem from "./TodoItem";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -28,7 +29,13 @@ const TodosContainer = () => {
           <Divider />
           <List>
             {todos &&
-              todos.map((todo) => <div key={todo.id}>{todo.title}</div>)}
+              todos.map((todo) => {
+                if (!todo.completed) {
+                  return <TodoItem key={todo.id} {...todo} />;
+                }
+
+                return null;
+              })}
           </List>
         </Grid>
         <Grid item xs={6}>
@@ -36,6 +43,16 @@ const TodosContainer = () => {
             Completed
           </Typography>
           <Divider />
+          <List>
+            {todos &&
+              todos.map((todo) => {
+                if (todo.completed) {
+                  return <TodoItem key={todo.id} {...todo} />;
+                }
+
+                return null;
+              })}
+          </List>
         </Grid>
       </Grid>
     </Box>

@@ -1,6 +1,6 @@
 import shortid from "shortid";
 import { initialState } from "./initial-state";
-import { ADD_TODO, TOGGLE_COMPLETED } from "./actions";
+import { ADD_TODO, DELETE_TODO, TOGGLE_COMPLETED } from "./actions";
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -19,12 +19,18 @@ const reducer = (state = initialState, action) => {
         ],
       };
     case TOGGLE_COMPLETED:
-      const { id } = action.payload;
       return {
         ...state,
         todos: state.todos.map((todo) =>
-          todo.id === id ? { ...todo, completed: !todo.completed } : todo
+          todo.id === action.payload
+            ? { ...todo, completed: !todo.completed }
+            : todo
         ),
+      };
+    case DELETE_TODO:
+      return {
+        ...state,
+        todos: state.todos.filter((todo) => todo.id != action.payload),
       };
     default:
       return state;

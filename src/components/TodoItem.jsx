@@ -1,13 +1,16 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { TOGGLE_COMPLETED } from "../redux/actions";
+import { DELETE_TODO, TOGGLE_COMPLETED } from "../redux/actions";
 import {
   Checkbox,
-  ListItem,
   FormControlLabel,
   FormGroup,
+  IconButton,
+  ListItem,
+  ListItemSecondaryAction,
   Typography,
 } from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const TodoItem = ({ id, title, completed, important }) => {
   const dispatch = useDispatch();
@@ -15,7 +18,14 @@ const TodoItem = ({ id, title, completed, important }) => {
   const toggleCheckbox = () => {
     dispatch({
       type: TOGGLE_COMPLETED,
-      payload: { id },
+      payload: id,
+    });
+  };
+
+  const handleDeleteClick = () => {
+    dispatch({
+      type: DELETE_TODO,
+      payload: id,
     });
   };
 
@@ -42,6 +52,11 @@ const TodoItem = ({ id, title, completed, important }) => {
           }
         ></FormControlLabel>
       </FormGroup>
+      <ListItemSecondaryAction>
+        <IconButton onClick={handleDeleteClick} edge="end">
+          <DeleteIcon />
+        </IconButton>
+      </ListItemSecondaryAction>
     </ListItem>
   );
 };

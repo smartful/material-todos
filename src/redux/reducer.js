@@ -7,11 +7,15 @@ import {
   TOGGLE_IMPORTANT,
 } from "./actions";
 
+const saveStateToBrowser = (state) => {
+  window.localStorage.setItem("material-todos", JSON.stringify(state));
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_TODO:
+    case ADD_TODO: {
       const { title } = action.payload;
-      return {
+      const newState = {
         ...state,
         todos: [
           ...state.todos,
@@ -23,8 +27,11 @@ const reducer = (state = initialState, action) => {
           },
         ],
       };
-    case TOGGLE_COMPLETED:
-      return {
+      saveStateToBrowser(newState);
+      return newState;
+    }
+    case TOGGLE_COMPLETED: {
+      const newState = {
         ...state,
         todos: state.todos.map((todo) =>
           todo.id === action.payload
@@ -32,8 +39,12 @@ const reducer = (state = initialState, action) => {
             : todo
         ),
       };
-    case TOGGLE_IMPORTANT:
-      return {
+
+      saveStateToBrowser(newState);
+      return newState;
+    }
+    case TOGGLE_IMPORTANT: {
+      const newState = {
         ...state,
         todos: state.todos.map((todo) =>
           todo.id === action.payload
@@ -41,11 +52,19 @@ const reducer = (state = initialState, action) => {
             : todo
         ),
       };
-    case DELETE_TODO:
-      return {
+
+      saveStateToBrowser(newState);
+      return newState;
+    }
+    case DELETE_TODO: {
+      const newState = {
         ...state,
         todos: state.todos.filter((todo) => todo.id != action.payload),
       };
+
+      saveStateToBrowser(newState);
+      return newState;
+    }
     default:
       return state;
   }

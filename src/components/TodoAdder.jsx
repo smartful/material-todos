@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { ADD_TODO } from "../redux/actions";
 import { Box, Button, TextField } from "@material-ui/core";
@@ -6,21 +6,26 @@ import { Box, Button, TextField } from "@material-ui/core";
 const TodoAdder = () => {
   const [title, setTitle] = useState("");
   const dispatch = useDispatch();
+  const titleFieldRef = useRef();
 
   const addTodo = () => {
-    dispatch({
-      type: ADD_TODO,
-      payload: {
-        title,
-      },
-    });
-    setTitle("");
+    if (title) {
+      dispatch({
+        type: ADD_TODO,
+        payload: {
+          title,
+        },
+      });
+      setTitle("");
+      titleFieldRef.current.value = "";
+    }
   };
 
   return (
     <Box>
       <TextField
         style={{ width: 400 }}
+        inputRef={titleFieldRef}
         label="Add new todo"
         variant="filled"
         onChange={(e) => setTitle(e.target.value)}

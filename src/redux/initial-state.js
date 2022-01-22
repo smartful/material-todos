@@ -27,8 +27,8 @@ export const initialState = {
     {
       id: 4,
       title: "Prepare meeting",
-      completed: true,
-      important: false,
+      completed: false,
+      important: true,
     },
   ],
 };

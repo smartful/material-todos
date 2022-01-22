@@ -19,6 +19,15 @@ const TodosContainer = () => {
     todos: state.todos,
   }));
 
+  const prioritise = () => {
+    const importantTodos = todos.filter((todo) => todo.important === true);
+    const notImportantTodos = todos.filter((todo) => todo.important === false);
+
+    return importantTodos.concat(notImportantTodos);
+  };
+
+  const prioritisedTodos = prioritise();
+
   return (
     <Box className={classes.root}>
       <Grid container spacing={2}>
@@ -28,8 +37,8 @@ const TodosContainer = () => {
           </Typography>
           <Divider />
           <List>
-            {todos &&
-              todos.map((todo) => {
+            {prioritisedTodos &&
+              prioritisedTodos.map((todo) => {
                 if (!todo.completed) {
                   return <TodoItem key={todo.id} {...todo} />;
                 }
@@ -44,8 +53,8 @@ const TodosContainer = () => {
           </Typography>
           <Divider />
           <List>
-            {todos &&
-              todos.map((todo) => {
+            {prioritisedTodos &&
+              prioritisedTodos.map((todo) => {
                 if (todo.completed) {
                   return <TodoItem key={todo.id} {...todo} />;
                 }

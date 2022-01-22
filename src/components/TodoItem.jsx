@@ -1,6 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { DELETE_TODO, TOGGLE_COMPLETED } from "../redux/actions";
+import {
+  DELETE_TODO,
+  TOGGLE_COMPLETED,
+  TOGGLE_IMPORTANT,
+} from "../redux/actions";
 import {
   Checkbox,
   FormControlLabel,
@@ -11,6 +15,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
+import StarIcon from "@material-ui/icons/Star";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
 
 const TodoItem = ({ id, title, completed, important }) => {
   const dispatch = useDispatch();
@@ -18,6 +24,13 @@ const TodoItem = ({ id, title, completed, important }) => {
   const toggleCheckbox = () => {
     dispatch({
       type: TOGGLE_COMPLETED,
+      payload: id,
+    });
+  };
+
+  const toggleImportant = () => {
+    dispatch({
+      type: TOGGLE_IMPORTANT,
       payload: id,
     });
   };
@@ -53,6 +66,9 @@ const TodoItem = ({ id, title, completed, important }) => {
         ></FormControlLabel>
       </FormGroup>
       <ListItemSecondaryAction>
+        <IconButton onClick={toggleImportant} edge="end">
+          {important ? <StarIcon /> : <StarBorderIcon />}
+        </IconButton>
         <IconButton onClick={handleDeleteClick} edge="end">
           <DeleteIcon />
         </IconButton>

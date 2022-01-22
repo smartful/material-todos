@@ -1,6 +1,11 @@
 import shortid from "shortid";
 import { initialState } from "./initial-state";
-import { ADD_TODO, DELETE_TODO, TOGGLE_COMPLETED } from "./actions";
+import {
+  ADD_TODO,
+  DELETE_TODO,
+  TOGGLE_COMPLETED,
+  TOGGLE_IMPORTANT,
+} from "./actions";
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -24,6 +29,15 @@ const reducer = (state = initialState, action) => {
         todos: state.todos.map((todo) =>
           todo.id === action.payload
             ? { ...todo, completed: !todo.completed }
+            : todo
+        ),
+      };
+    case TOGGLE_IMPORTANT:
+      return {
+        ...state,
+        todos: state.todos.map((todo) =>
+          todo.id === action.payload
+            ? { ...todo, important: !todo.important }
             : todo
         ),
       };
